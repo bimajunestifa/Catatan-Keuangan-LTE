@@ -288,7 +288,7 @@
                 Kelola keuangan Anda dengan mudah. Catat pemasukan dan pengeluaran secara efisien untuk mengontrol keuangan Anda dengan lebih baik!
             </p>
             <div class="brand-copyright">
-                © {{ date('Y') }} Pencatatan Keuangan. All rights reserved.
+                © {{ date('Y') }} Pencatatan Keuangan Bima. All rights reserved.
             </div>
         </div>
 

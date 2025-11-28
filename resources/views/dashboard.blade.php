@@ -95,7 +95,7 @@
                     <div class="info-box-content">
                         <span class="info-box-text">Total Pengeluaran</span>
                         <span class="info-box-number">
-                            Rp{{ number_format($pengeluaran ?? 0, 0, ',', '.') }}
+                    Rp{{ number_format($pengeluaran ?? 0, 0, ',', '.') }}
                         </span>
                         <div class="progress">
                             <div class="progress-bar bg-danger" style="width: 100%"></div>
@@ -103,6 +103,120 @@
                         <span class="progress-description">
                             <a href="{{ route('transaksi.index') }}?filter=pengeluaran" class="text-danger">More info →</a>
                         </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sisa Saldo Row -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-body text-center py-4">
+                        <h3 class="mb-2" style="color: #6c757d; font-size: 18px;">Sisa Saldo</h3>
+                        <h1 class="mb-0" style="color: #007bff; font-size: 48px; font-weight: bold;">
+                            Rp{{ number_format($saldo ?? 0, 0, ',', '.') }}
+                        </h1>
+                        <p class="text-muted mt-2 mb-0">
+                            <small>Dari Total Pemasukan Rp{{ number_format($pemasukan ?? 0, 0, ',', '.') }} dikurangi Total Pengeluaran Rp{{ number_format($pengeluaran ?? 0, 0, ',', '.') }}</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detail Pemasukan dan Pengeluaran Row -->
+        <div class="row">
+            <!-- Detail Pemasukan per Kategori -->
+            <div class="col-12 col-lg-6">
+                <div class="card card-success card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-arrow-up mr-1"></i>
+                            Detail Total Pemasukan
+                        </h3>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Kategori</th>
+                                    <th class="text-right">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($detailPemasukan ?? [] as $dp)
+                                <tr>
+                                    <td><strong>{{ $dp->nama_kategori }}</strong></td>
+                                    <td class="text-right">
+                                        <strong>Rp{{ number_format($dp->total, 0, ',', '.') }}</strong>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="2" class="text-center text-muted py-4">
+                                        <i class="fas fa-inbox fa-2x mb-2 d-block"></i>
+                                        Belum ada data pemasukan.
+                                    </td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                            <tfoot>
+                                <tr class="bg-light">
+                                    <td><strong>Grand Total</strong></td>
+                                    <td class="text-right">
+                                        <strong class="text-success">Rp{{ number_format($pemasukan ?? 0, 0, ',', '.') }}</strong>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+            </div>
+        </div>
+    </div>
+
+            <!-- Detail Pengeluaran per Kategori -->
+            <div class="col-12 col-lg-6">
+                <div class="card card-danger card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-arrow-down mr-1"></i>
+                            Detail Total Pengeluaran
+                        </h3>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Kategori</th>
+                                    <th class="text-right">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($detailPengeluaran ?? [] as $dp)
+                                <tr>
+                                    <td><strong>{{ $dp->nama_kategori }}</strong></td>
+                                    <td class="text-right">
+                                        <strong>Rp{{ number_format($dp->total, 0, ',', '.') }}</strong>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="2" class="text-center text-muted py-4">
+                                        <i class="fas fa-inbox fa-2x mb-2 d-block"></i>
+                                        Belum ada data pengeluaran.
+                                    </td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                            <tfoot>
+                                <tr class="bg-light">
+                                    <td><strong>Grand Total</strong></td>
+                                    <td class="text-right">
+                                        <strong class="text-danger">Rp{{ number_format($pengeluaran ?? 0, 0, ',', '.') }}</strong>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -159,9 +273,9 @@
                                 @endforelse
                             </tbody>
                         </table>
-                    </div>
-                </div>
             </div>
+        </div>
+    </div>
 
             <!-- Kategori Populer -->
             <div class="col-12 col-lg-6">
@@ -207,7 +321,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+</div>
 
         <!-- Chart Row -->
         <div class="row">
@@ -242,7 +356,7 @@
                         @endif
                     </div>
                 </div>
-            </div>
+    </div>
 
             <!-- Pie Chart - Pengeluaran per Kategori -->
             <div class="col-12 col-lg-4">
@@ -258,24 +372,24 @@
                             </button>
                         </div>
                     </div>
-                    <div class="card-body">
-                        @if(isset($chart) && $chart->isNotEmpty())
+    <div class="card-body">
+        @if(isset($chart) && $chart->isNotEmpty())
                             <div class="chart-container" 
                                  style="position: relative; height: 400px; min-height: 300px;"
                                  data-labels='@json($chart->pluck('nama_kategori'))'
                                  data-values='@json($chart->pluck('total'))'>
-                                <canvas id="pieChart"></canvas>
-                            </div>
-                        @else
+                <canvas id="pieChart"></canvas>
+            </div>
+        @else
                             <div class="alert alert-info text-center py-5">
                                 <i class="fas fa-chart-pie fa-3x mb-3 d-block"></i>
                                 <p class="mb-0">Belum ada data pengeluaran untuk ditampilkan pada grafik.</p>
                             </div>
-                        @endif
+        @endif
                     </div>
                 </div>
-            </div>
-        </div>
+    </div>
+</div>
 
     </div>
 </section>
@@ -284,7 +398,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function () {
-    
+
     // Bar Chart - Pemasukan vs Pengeluaran
     var barCtx = document.getElementById('barChart');
     if (barCtx) {
@@ -418,29 +532,29 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                     
                     // Destroy existing chart instance if any
-                    if (window._pieChartInstance) {
-                        window._pieChartInstance.destroy();
-                    }
+    if (window._pieChartInstance) {
+        window._pieChartInstance.destroy();
+    }
 
                     window._pieChartInstance = new Chart(pieCtx, {
-            type: 'pie',
-            data: {
-                labels: labels,
-                datasets: [{
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
                     label: 'Total Pengeluaran',
-                    data: values,
-                    backgroundColor: backgroundColors,
-                    borderWidth: 2,
+                data: values,
+                backgroundColor: backgroundColors,
+                borderWidth: 2,
                     borderColor: '#fff',
                     hoverOffset: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
                         labels: { 
                             padding: 15,
                             font: {

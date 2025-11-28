@@ -71,9 +71,26 @@ class DashboardController extends Controller
             ->limit(5)
             ->get();
 
+        // Detail Pemasukan per Kategori
+        $detailPemasukan = Transaksi::selectRaw('nama_kategori, SUM(nominal) as total')
+            ->join('kategori','kategori.id_kategori','=','transaksi.id_kategori')
+            ->where('jenis_transaksi','pemasukan')
+            ->groupBy('kategori.id_kategori','nama_kategori')
+            ->orderBy('total', 'desc')
+            ->get();
+
+        // Detail Pengeluaran per Kategori
+        $detailPengeluaran = Transaksi::selectRaw('nama_kategori, SUM(nominal) as total')
+            ->join('kategori','kategori.id_kategori','=','transaksi.id_kategori')
+            ->where('jenis_transaksi','pengeluaran')
+            ->groupBy('kategori.id_kategori','nama_kategori')
+            ->orderBy('total', 'desc')
+            ->get();
+
         return view('dashboard', compact(
             'pemasukan','pengeluaran','saldo','totalKategori','totalTransaksi',
-            'chart','months','incomeData','expenseData','transaksiTerbaru','kategoriPopuler'
+            'chart','months','incomeData','expenseData','transaksiTerbaru','kategoriPopuler',
+            'detailPemasukan','detailPengeluaran'
         ));
     }
 }
